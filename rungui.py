@@ -21,6 +21,16 @@ def save_config():
         messagebox.showinfo("Run", "program run successfully!")
         root.withdraw()  
         final_video(topic_entry2.get(), time_entry2.get(), language_combobox2.get(), multi_speaker_var.get())
+    elif notebook.index(notebook.select()) == 2:
+        update_config_file('config.txt', 'title', title_entry.get())
+        update_config_file('config.txt', 'video-content', video_content_entry.get())
+        update_config_file('config.txt', 'time', time_entry3.get())
+        update_config_file('config.txt', 'intro_video', intro_video_var3.get())
+        update_config_file('config.txt', 'pexels_api', pexels_entry3.get())
+        update_config_file('config.txt', 'language', language_combobox3.get())
+        update_config_file('config.txt', 'multi_speaker', multi_speaker_var3.get())
+        messagebox.showinfo("Run", "program run successfully!")
+        root.withdraw()
 
 root = tk.Tk()
 root.title("Configurator")
@@ -30,9 +40,11 @@ notebook.pack(fill='both', expand=True)
 
 frame1 = ttk.Frame(notebook)
 frame2 = ttk.Frame(notebook)
+frame3 = ttk.Frame(notebook)
 
 notebook.add(frame1, text='long video')
 notebook.add(frame2, text='short video')
+notebook.add(frame3, text='custom video')
 
 def add_label_with_description(frame, row, text, description):
     ttk.Label(frame, text=f"{text}: {description}", wraplength=400, justify='left').grid(row=row, column=0, columnspan=2, padx=5, pady=5, sticky='w')
@@ -82,6 +94,32 @@ multi_speaker_checkbox2.grid(row=3, column=2, padx=5, pady=5)
 pexels_entry2 = tk.Entry(frame2)
 pexels_entry2.grid(row=4, column=2, padx=5, pady=5)
 
+# Frame 3 Widgets
+add_label_with_description(frame3, 0, "title", "Video Title")
+add_label_with_description(frame3, 1, "video-content", "video content")
+add_label_with_description(frame3, 2, "Time", "video time in minute")
+add_label_with_description(frame3, 3, "Intro_video", "video intro")
+add_label_with_description(frame3, 4, "Pexels_api", "api")
+add_label_with_description(frame3, 5, "Language", "english")
+add_label_with_description(frame3, 6, "Multi_speaker", "no")
+
+title_entry = tk.Entry(frame3)
+title_entry.grid(row=0, column=2, padx=5, pady=5)
+video_content_entry = tk.Entry(frame3)
+video_content_entry.grid(row=1, column=2, padx=5, pady=5)
+time_entry3 = tk.Entry(frame3)
+time_entry3.grid(row=2, column=2, padx=5, pady=5)
+intro_video_var3 = tk.StringVar(value="yes")
+intro_video_checkbox3 = ttk.Checkbutton(frame3, variable=intro_video_var3, onvalue="yes", offvalue="no")
+intro_video_checkbox3.grid(row=3, column=2, padx=5, pady=5)
+pexels_entry3 = tk.Entry(frame3)
+pexels_entry3.grid(row=4, column=2, padx=5, pady=5)
+language_combobox3 = ttk.Combobox(frame3, values=["persian", "english", "arabic", "vietnamese", "zulu", "afrikaans", "amharic", "azerbaijani", "bulgarian", "bengali", "bosnian", "catalan", "czech", "welsh", "danish", "german", "greek", "spanish", "estonian", "filipino", "finnish", "french", "irish", "galician", "gujarati", "hebrew", "hindi", "croatian", "hungarian", "indonesian", "icelandic", "italian", "japanese", "javanese", "georgian", "kazakh", "khmer", "kannada", "korean", "lao", "lithuanian", "latvian", "macedonian", "malayalam", "mongolian", "marathi", "malay", "maltese", "burmese", "norwegian", "nepali", "dutch", "polish", "pashto", "portuguese", "romanian", "russian", "sinhala", "slovak", "slovenian", "somali", "albanian", "serbian", "sundanese", "swedish", "swahili", "tamil", "telugu", "thai", "turkish", "ukrainian", "urdu", "uzbek"])
+language_combobox3.grid(row=5, column=2, padx=5, pady=5)
+multi_speaker_var3 = tk.StringVar(value="no")
+multi_speaker_checkbox3 = ttk.Checkbutton(frame3, variable=multi_speaker_var3, onvalue="yes", offvalue="no")
+multi_speaker_checkbox3.grid(row=6, column=2, padx=5, pady=5)
+
 # Frame 1 Defaults
 topic_entry.insert(0, "survival video game")
 general_topic_entry.insert(0, read_config_file()['general_topic'])
@@ -97,6 +135,15 @@ time_entry2.insert(0, "30")
 language_combobox2.set("english")
 multi_speaker_var2.set(read_config_file()['multi_speaker'])
 pexels_entry2.insert(0, read_config_file()['pexels_api'])
+
+# Frame 3 Defaults
+title_entry.insert(0, "Video Title")
+video_content_entry.insert(0, "Content")
+time_entry3.insert(0, "10")
+intro_video_var3.set("yes")
+pexels_entry3.insert(0, "API")
+language_combobox3.set("english")
+multi_speaker_var3.set("no")
 
 save_button = tk.Button(root, text="run", command=save_config)
 save_button.pack(pady=10)
